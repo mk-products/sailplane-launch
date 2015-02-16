@@ -1,0 +1,1909 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass scrbook
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Discussion
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+As mention earlier the analytical solution will be a very simplified analysis
+ and only considered a few effects during a launch.
+ The path is considered to be ideal and therefore there is no need for looking
+ at the moments of the plane and no regulation loop of inputs.
+ This means that the acceleration can be integrated twice to find the path
+ of the launch.
+ The acceleration is given by the sum of the forces on the plane.
+ The typical launch path is given in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Launch-path."
+
+\end_inset
+
+ however the different force involves a large number of parameters were
+ several of them are dependent on each others.
+ Typically for aeroplanes it would be solved in a airplane coordinate system
+ and then transformed into a earth frame, but since the winch is fixed to
+ ground the forces are transformed into vectors in x and z direction of
+ the global coordinate system.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Discussion/launch.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Launch path.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Launch-path."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Position
+\end_layout
+
+\begin_layout Subsection
+Acceleration
+\end_layout
+
+\begin_layout Standard
+The position or the path can be found by integration of acceleration and
+ velocities.
+ As mentioned above this paper is only looking at the forces, and by using
+ newtons second law, 
+\begin_inset Formula $F=m\cdot a$
+\end_inset
+
+ the acceleration can be found.
+ There exist several num,erical integration methods, however due to the
+ fact that there is several phases and events a forward euler methos was
+ chosen to be sure that the simulation will produce a result when the equations
+ are altered.
+ The derivation of the forces in x,z direction will be discussed later in
+ the forces section.
+\end_layout
+
+\begin_layout Subsubsection
+Total velocity
+\end_layout
+
+\begin_layout Standard
+When the acceleration is integrated the velocity is found.
+ However to find the total velocity it is also neccesary to add the external
+ disturbances such as thermic and wind.
+\end_layout
+
+\begin_layout Standard
+The wind speed vary with the height and there is no certain data available
+ and this needs to be calculated on the fly with the help of sensoric.
+ However for the simulation a simplified model,
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ref
+\end_layout
+
+\end_inset
+
+ will be used, the wind speed is estimated as a polynomial as shown in equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:windSpeed"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+vw=vw_{ref}\cdot\left(\frac{z}{2}\right)^{\frac{1}{7}}\label{eq:windSpeed}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here is to be noted that the reference speed, typicaly the wind speed is
+ measured in the aproximity of the ground, and by using this value togehter
+ with the height of the measurement the reference wind speed can be found
+ see equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:vwref"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+vw_{ref}=\frac{vw}{\left(\frac{z}{2}\right)^{\frac{1}{7}}}\label{eq:vwref}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This means that the velocity of the wind is zero at ground, which correspond
+ to a no slip condition.
+\end_layout
+
+\begin_layout Standard
+For the thermic a linear model is assumed, where the thermic is known at
+ given height.
+ Up to this height the thermic increases linearly, see equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:vt"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+vt=\frac{vt_{ceil}\cdot z}{z_{ceil}}\label{eq:vt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is worth mentioning that it is only considered thermic and head wind,
+ sink and tail wind can be found by setting in the reference speeds with
+ negative signs.
+ Crosswind and more complex windmodels are not implemented at this stage.
+ 
+\end_layout
+
+\begin_layout Standard
+By integrating the velocity the position or the path can be found, in addition
+ is also needed to know which phase the plane is in since this alters the
+ force and angles equations.
+\end_layout
+
+\begin_layout Section
+Phases
+\end_layout
+
+\begin_layout Standard
+As seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Launch-path."
+
+\end_inset
+
+, the launch path is continues but not homegenous.
+ The path is therefore divided into several phases where a given configuration
+ is valid.
+ 
+\end_layout
+
+\begin_layout Standard
+Dependent of aircraft configuration and launch configuration not all of
+ the phases needs to be used during a winch launchwhich is illustrated in
+ figure ,.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Discussion/launch.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Launch path.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Launch-path.-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add correct figure with all phases
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As seen in figure , 3 different alternatives of launch teqniques is sketched
+ :
+\end_layout
+
+\begin_layout Enumerate
+full size gliders
+\end_layout
+
+\begin_layout Enumerate
+a typically F3B launch 
+\end_layout
+
+\begin_layout Enumerate
+a radical launch for F3J
+\end_layout
+
+\begin_layout Standard
+The effect of these launch teqniques will be evaluated later.In addition
+ to launch alternative there aslo occur events which might initiate a phase
+ or alter the launch configuration, however events will be explained later
+ in this chapter.
+\end_layout
+
+\begin_layout Subsection
+Phase 0
+\end_layout
+
+\begin_layout Standard
+In this phase the line will be pretension by starting the winch which the
+ starts winding up the line, therefore the plane velocities is kept at zero.
+\end_layout
+
+\begin_layout Subsubsection
+Phase 1
+\end_layout
+
+\begin_layout Standard
+Here the glider release the brakes and starts rolling on the ground until
+ it takes off.
+ The velocity is in this phase is only kept at zero for the z-axis.
+ However for a F3B or similar glider, which does not have a undercarriage
+ this phase will consist of the launch of the glider with a given angle
+ and start speed, i.e only one timestep.
+\end_layout
+
+\begin_layout Subsubsection
+Phase 2
+\end_layout
+
+\begin_layout Standard
+The climb phase is the second phase, this phase is characterized by a high
+ lift configuration phase, 
+\end_layout
+
+\begin_layout Subsubsection
+Phase 3
+\end_layout
+
+\begin_layout Standard
+In this phase the elastic energy stored in the line will be transferred
+ in to kinetic energy.
+\end_layout
+
+\begin_layout Subsubsection
+Phase 4
+\end_layout
+
+\begin_layout Standard
+This is another climb phase, but this time the plane is not attached to
+ winch line and the kinetic energy is transferred into additional height.
+\end_layout
+
+\begin_layout Subsubsection
+Phase 5
+\end_layout
+
+\begin_layout Standard
+The winch is ended by the phase 5, this phase is dependent of the task that
+ is going to be flown after the launch and the weather conditions.
+\end_layout
+
+\begin_layout Section
+Forces
+\end_layout
+
+\begin_layout Standard
+The forces are differnt in each phase, for instance in phase 4 there is
+ no lineforce, in phase 3 there is almost no line drag, in phase 1 the wheel
+ friction and the lineforce is dominant.
+ Thge forces in phase 2 is illustrated in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Force-in-phase"
+
+\end_inset
+
+, this is similar to the other other phase, where one or more forces is
+ to be omitted or added.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Discussion/vectorsPhase1.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Force in phase 1.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Force-in-phase"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The forces in the figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Force-in-phase"
+
+\end_inset
+
+ is listed in equation and consist of four forces, gravity,line,drag and
+ lift force.
+ However these forces are not independent of each other and have several
+ parameters which influence them.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "r-Trajectory radius"
+symbol "$R$"
+description "Trajectory radius \\nomunit{[m]}"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "m_w-Moment of winch moto"
+symbol "$M_w$"
+description "Moment of winch motor \\nomunit{[Nm]}"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "r-Winch drum radius"
+symbol "$r$"
+description "Winch drum radius  \\nomunit{[m]}"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "E-Young modulus of the winch line"
+symbol "$E$"
+description "Young modulus of the winch line \\nomunit{[Pa]}"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "a_l-Cross section area of winch line"
+symbol "$A_L$"
+description "Cross section area of winch line \\nomunit{[$m^2$]} "
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "l-Distance from plane to winch point"
+symbol "$L$"
+description "Distance from plane to winch point \\nomunit{[m]} "
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "delta l-Extension of winch line under forces"
+symbol "$\\Delta l$"
+description "Extension of winch line under forces\\nomunit{[m]} "
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "phi-Trajectory inclination angle"
+symbol "$\\phi$"
+description "Trajectory inclination angle \\nomunit{ [rad]} "
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "gamma-Towing angle"
+symbol "$\\gamma$"
+description "Towing angle \\nomunit{ [rad]} "
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "Beta-Angle between winch line and plane direction"
+symbol "$\\beta$"
+description "Angle between winch line and plane direction \\nomunit{ [rad]} "
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+prefix "s-Traveled trajectory"
+symbol "$s$"
+description "Traveled trajectory \\nomunit{ [m]} "
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+G & = & m\cdot g\\
+L & = & \frac{C_{LA}\cdot\rho\cdot A\cdot v^{2}}{2}\\
+D & = & \left(C_{DP}\cdot S_{P}+C_{DL}\cdot S_{L}\right)\cdot\frac{\rho\cdot v^{2}}{2}\\
+F_{L} & = & F_{M}+F_{E}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Gravity force
+\end_layout
+
+\begin_layout Standard
+The gravity force always works in negative global z axis, however the mass
+ is dependent of several parameters, which are shown in equation 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+G & = & A\cdot WL\cdot g\\
+G & = & \frac{b^{2}\cdot WL\cdot g}{\Lambda}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Lift force
+\end_layout
+
+\begin_layout Standard
+The lift coefficient can be estimated by a linear approximation for different
+ angle of attacks, see equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Lnd.py:clAlpha"
+
+\end_inset
+
+.
+ Close to stall this linear approximation is not valid, this means in a
+ launch configuration when the pilot is pushing the limit this might yield
+ in inaccurate results.
+ For a typical F3B profile, HQW2/8 the curve can been seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:startpolar-cmo"
+
+\end_inset
+
+, with 5 degree positive flap.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Polars/hqw-2-8-5grad-cmo.png
+	lyxscale 60
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Polars for HQW2/8 with start flap setting .
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:startpolar-cmo"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{L}=C_{L}'\cdot\alpha\label{eq:Lnd.py:clAlpha}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the case of flat plate 
+\begin_inset Formula $C_{L}'=2\cdot\pi$
+\end_inset
+
+ , so as seen by figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:startpolar-cmo"
+
+\end_inset
+
+ this coeffsient will be reduced for a profile, this yields to a lower lift,
+ see equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:liftCoeff-1"
+
+\end_inset
+
+, where 
+\begin_inset Formula $e<1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{L}=2\cdot\pi\cdot e\cdot\alpha\label{eq:liftCoeff-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However the lift is altered when using differnt flap setting, as seen in
+ figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:speedpolar-cmo-1"
+
+\end_inset
+
+, where the curve is parellell to the one in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:startpolar-cmo"
+
+\end_inset
+
+, but where the crossing point with the Cl axis is shifted downwards.
+ In addition the stall point is shifted to a higher angle of attack.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Polars/hqw-2-8-25grad-cmo.png
+	lyxscale 60
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Polars for HQW2/8 with speed flap setting .
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:speedpolar-cmo-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So by combing all this information a very accurate linear approximation
+ for the lift coeffcient for different flap position can be found, see equation
+\end_layout
+
+\begin_layout Standard
+For the analysis  it is necessary to to find the equivalent total lift coefficie
+nt for the wing, see equation 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{LA}=C_{L}\cdot\frac{\Lambda}{\Lambda+2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This compensates for a non elliptical wing shape, however for gliders the
+ aspect ratio is large and the total lift coefficient is therefore more
+ than 90% of the local lift coefficient, as shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lift-coefficient-reduction."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Matlab/Reductionoflifcoefficientduetononellipticalliftdistrubution.jpg
+	lyxscale 60
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Lift coefficient reduction.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lift-coefficient-reduction."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Drag
+\end_layout
+
+\begin_layout Standard
+The drag is consist of two parts, one for the plane and one for the line.
+ As for the lift it changes with the velocity,angle of attack and geometry.
+ However there is greater uncertainty with the drag estimate, and below
+ some effects will be discussed.
+\end_layout
+
+\begin_layout Subsubsection
+Plane drag
+\end_layout
+
+\begin_layout Subsubsection
+Lift induced drag 
+\end_layout
+
+\begin_layout Standard
+Induced drag is drag which occurs as the result of the creation of lift
+ in 3D.
+ Induced drag consists of two primary components, including drag due to
+ the creation of vortices (vortex drag) and the presence of additional viscous
+ drag (lift-induced viscous drag).
+ 
+\end_layout
+
+\begin_layout Standard
+With other parameters remaining the same, as the lift generated by the wing
+ increases, so does the lift-induced drag.
+ The induced drag can be estimated by equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:induced drag"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Set inn ref til white
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{DI}=\frac{C{}_{L}^{2}}{\pi\cdot e\cdot\Lambda}\label{eq:induced drag}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Oswald factor 
+\begin_inset Formula $e$
+\end_inset
+
+ , is for a glider with high aspect ratio normally greater than 
+\begin_inset Formula $0.9$
+\end_inset
+
+, and will therefore not influence the induced drag dramatically.
+ The induced drag is therefore important in the phases where high lift is
+ needed, which typically will be in phase 2.
+\end_layout
+
+\begin_layout Subsubsection
+Parasitic drag 
+\end_layout
+
+\begin_layout Standard
+Parasite drag is drag caused by moving a solid object through the air.
+ Parasitic drag is made up of multiple components including viscous pressure
+ drag (form drag), and drag due to surface roughness (skin friction drag).
+ 
+\end_layout
+
+\begin_layout Standard
+Parasitic drag increases with the speed because the fluid is flowing faster
+ around protruding objects which is then increasing the friction or drag.
+ Therefore parasitic drag will be dominant in the phases with high velocity,
+ such as phase 3 and 4.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Polars/hqw-2-8-25grad.png
+	lyxscale 60
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Polars for HQW2/8 with speed flap setting .
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:speedpolar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Polars/hqw-2-8-5grad.png
+	lyxscale 60
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Polars for HQW2/8 with start flap setting .
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:startpolar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Interference drag
+\end_layout
+
+\begin_layout Standard
+Additionally, the presence of multiple bodies in relative proximity it incur
+ so called interference drag.
+ The interference drag is hard to estimate and should ideally be measured.
+ As a rule of thumb there is one glide ratio point lost for every interconnectio
+n, for a modern F3B plane this means 4.
+ The interference drag is small compared to induced and parasitic drag,
+ but it is present at every phase.
+\end_layout
+
+\begin_layout Subsubsection
+Rolling drag
+\end_layout
+
+\begin_layout Standard
+When the glider is at the ground there will also be friction drag between
+ the wheel and the ground.
+ This drag is reduced with increasing lift since then the normal force is
+ reduced, see equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rollingDrag"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{DR}=\mu\cdot\left(G-L\right)\label{eq:rollingDrag}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Total drag
+\end_layout
+
+\begin_layout Standard
+The total drag is the sum of all the drags, this will be high for a low
+ speed then decrease and then increase as the speed goes higher.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{D}=C_{Ds}+C_{Di}+C_{Dp}+C_{Dr}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Line force
+\end_layout
+
+\begin_layout Standard
+The line force consist of two parts, the force from the winch motor characterist
+ic and the line characteristic.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Winch force
+\end_layout
+
+\begin_layout Standard
+The force from the winch is given by its moment and drum radius, this means
+ that the motor characteristic and the drum geometry are input parameters
+ to the launch.
+ In F3B the maximum allowed power is limited as well as the motor needs
+ to be a standard car starter engine.
+ In equation is the line force given as a function of the motor moment and
+ the drum radius.
+\end_layout
+
+\begin_layout Standard
+However the radius will change if the drum is not wide enough to hold the
+ complete line in one single layer, which is normally the case, this means
+ that the drum diameter will increase during the launch.
+ This is illustrated in figure
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{W}=\frac{M_{W}}{r_{w}}\label{eq:winchForce}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The power that the winch has is given in equation , this is important since
+ it in F3B is set a maximum allowed power.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P_{W}=F_{W}\cdot v_{L}\label{eq:lineStress-2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equation can be rearranged so that the winch force can be found for any
+ given winch output power, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{W}=\frac{60\cdot P_{W}}{2\cdot\pi\cdot r_{drum}\cdot N}\label{eq:lineStress-3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are two events of a standard motor which needs to be taken into account,
+ what that happens when the motor is stalled, the line force has become
+ so large that the available torque is not sufficient to still wind in the
+ line 
+\begin_inset Formula $T_{WS}$
+\end_inset
+
+, and what happens when there is no line force, speed where the winch has
+ no torque 
+\begin_inset Formula $N_{TZ}$
+\end_inset
+
+.
+ These two case can been seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Winch-caracteristic"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Pics/Matlab/PowervsSpeed.jpg
+	lyxscale 60
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Winch characteristic for an FRB winch.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Winch-caracteristic"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Elastic line force
+\end_layout
+
+\begin_layout Standard
+Every line is elastic, even a steel wire, however the elongation of the
+ line and reversible of the line is very dependent of the material used.
+ 
+\end_layout
+
+\begin_layout Standard
+The stress in the cable is a function of the line force and the cross section
+ area of the line, equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sigma=\frac{F}{A}\label{eq:lineStress}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The line has a circular cross section, even though a symmetrical airfoil
+ would be ideal, this has to do with manufacturing of the line and price.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+A=\frac{\pi\cdot d^{2}}{4}\label{eq:LineArea}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The stress can also be expressed from the young’s modulus as shown in equation
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sigma=E\cdot\epsilon\label{eq:lineStress-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the elongation of the line is dependent of the total length of the line
+ and the deflection as shown in equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\epsilon=\frac{\Delta l}{l}\label{eq:lineElongination}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lineStress"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:lineElongination"
+
+\end_inset
+
+ are combined the elastic force can be found, as shown in equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{E}=\frac{E\cdot\Delta l\cdot\pi\cdot d^{2}}{4\cdot l}\label{eq:elasticLineForce}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This equation can be reshaped so that the standard equation for a spring
+ can be used, see equation 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{E}=k\cdot\epsilon\label{eq:force-spring}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The spring constant is then found by combining equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:elasticLineForce"
+
+\end_inset
+
+and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:force-spring"
+
+\end_inset
+
+, equation 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k=\frac{E\cdot\pi\cdot d^{2}}{4}\label{eq:force-spring-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The problem is that the total line is winded up and therefore the total
+ unstressed line length length needs to be adjusted.
+ The line length that is winded up is given by the motor and the drum diameter
+ as shown in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:windedUpLine"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta l_{s}=\int\frac{2\cdot N\cdot\pi\cdot r_{drum}}{60}dt\label{eq:windedUpLine}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The total elastic line force is then given by combing equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:elasticLineForce"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:windedUpLine"
+
+\end_inset
+
+, which is shown in equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{E}=\frac{E\cdot\Delta l\cdot\pi\cdot d^{2}}{4\cdot\left(l_{0}-\int\frac{2\cdot N\cdot\pi\cdot r_{drum}}{60}dt\right)}\label{eq:elasticLineForce-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Total line force
+\end_layout
+
+\begin_layout Standard
+If the line is perfectly elastic and reversible the total line force can
+ be found by adding them, the total force can then be found by using equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:totalLineForce"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{L}=\frac{E\cdot\Delta l\cdot\pi\cdot d^{2}}{4\cdot\left(l_{0}-\int\frac{2\cdot N\cdot\pi\cdot r_{drum}}{60}dt\right)}+\frac{60\cdot P_{W}}{2\cdot\pi\cdot r_{drum}\cdot N}\label{eq:totalLineForce}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The formula in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:totalLineForce"
+
+\end_inset
+
+ is implicit due to the fact that the speed and the radius of the drum is
+ related to the other parameters in the formula, this adds complexity to
+ the system and only a numerical solution can be found.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F_{L}=max\left(0,F_{L}\left(i-1\right)+\frac{\Delta l\cdot k}{l}\right)\label{eq:windedUpLine-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Sum of forces
+\end_layout
+
+\begin_layout Standard
+The total forces can be found summing up all the force in XZ direction,
+ for X direction is given in equation 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+F_{X} & = & \cos\left(\theta\right)\cdot F_{L}-\cos\left(\varphi\right)\cdot D-\sin\left(\varphi\right)\cdot L\\
+F_{Z} & = & -\sin\left(\theta\right)\cdot F_{L}-\sin\left(\varphi\right)\cdot D+\cos\left(\varphi\right)\cdot L-G
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When all the forces are set into these two equations becomes dependent of
+ several parameters.
+\end_layout
+
+\begin_layout Section
+Angles
+\end_layout
+
+\begin_layout Standard
+The angles is used to determine the forces in X and Z direction as well
+ as events which will be described later.
+ It is important to pay attention that the angles are given in the correct
+ quadrant since some of the forces changes sign dependent on which quadrant
+ the plane is in.
+\end_layout
+
+\begin_layout Standard
+The angle between the path tangent and the horizontal plane is called 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ and can be found in two different ways, either by using the velocity, equation
+ or by using the relation to the point to the pulley, equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\varphi & = & \arctan\left(\frac{w}{u}\right)\\
+\varphi & = & \beta-\gamma
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If there is no drag or the line force is large the angle that the line is
+ pulling is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\theta & = & \gamma\: for\: L_{D}=0\\
+\theta & < & \gamma\: for\: L_{D}>0
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Events
+\end_layout
+
+\begin_layout Standard
+Under a normal winch start there is several events happening at certain
+ angles, velocities and heights.
+\end_layout
+
+\begin_layout Subsection
+Pre tension
+\end_layout
+
+\begin_layout Standard
+Before release from the launcher the winch is started and at a given line
+ force the model is released with a start angle and velocity.
+ This means that the line is winded up on the drum with increasing force
+ and different line diameter.
+\end_layout
+
+\begin_layout Subsection
+Motor stall
+\end_layout
+
+\begin_layout Standard
+If the line force is becoming larger then the maximum moment that the winch
+ can handle the one way bearing on the winch kick in preventing the winch
+ drum from spinning in the wrong direction.
+ 
+\end_layout
+
+\begin_layout Subsection
+Zooming flap
+\end_layout
+
+\begin_layout Standard
+The launch is started with a high flap setting, then at a certain point,
+ a 
+\begin_inset Formula $\gamma_{SF}$
+\end_inset
+
+ angle a switch is activated which then decreases the positive flap to negative
+ flap with a time constant,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\kappa & = & \kappa_{PF}-\kappa_{kp}\cdot t\, for\, t\leq t_{\kappa}\\
+\kappa & = & \kappa_{NF}\, for\, t>t_{\kappa}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Zooming start
+\end_layout
+
+\begin_layout Standard
+When the plane is getting close to 
+\begin_inset Formula $\gamma=90^{o}$
+\end_inset
+
+ of phase 1 the dive to zooming phase is initiated, 
+\begin_inset Formula $\gamma_{z}$
+\end_inset
+
+ and then the elastic energy in the line is transferred into kinetic energy.
+\end_layout
+
+\begin_layout Subsection
+Zooming arc
+\end_layout
+
+\begin_layout Standard
+The radius of the arc that the zoom is initiated with is important for the
+ final height.
+\end_layout
+
+\begin_layout Subsection
+Kick flap
+\end_layout
+
+\begin_layout Standard
+At a certain height the dive is ended by applying elevator, however this
+ elevator is connected to the flap with , kick flap, equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\kappa=\kappa_{kpe}\cdot\eta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Bottom arc
+\end_layout
+
+\begin_layout Standard
+Shortly before the line is released an arc is introduced together with the
+ kick-flap mentioned above.
+ The question is how large the radius of this arc should be to reach maximum
+ final height.
+ A to narrow radius will lead to high g-forces which may destroy the plane
+ and a to large radius will lead to large energy losses.
+\end_layout
+
+\begin_layout Subsection
+Line release
+\end_layout
+
+\begin_layout Standard
+At a certain 
+\begin_inset Formula $\beta_{L}$
+\end_inset
+
+ the line is released and the drag and gravity force is the only force working
+ on the plane (lift is close to zero in climb phase).
+ The angle can be defined in two ways, either by when the plane has reached
+ a certain dive height or when the rest elongation of the line has reached
+ a desired minimum level.
+\end_layout
+
+\begin_layout Subsection
+End of launch
+\end_layout
+
+\begin_layout Standard
+The last event is when the vertical climb is ended and the winch start is
+ considered over.
+ The ideal path flown at the end of the launch is dependent of the task
+ that are later flown, if there i long distance flight then it is probably
+ most desirable to end up with a flap setting for the highest glide ratio.
+ On the other hand if there is there is an endurance task to be flown, then
+ a flap setting for minimum sink is desirable.
+ Often also a change of direction is desirable, like flying back to start,
+ then a half turn will be flown at the end of the launch.
+ As a summary there can be said that the ideally path is dependent of task
+ and the conditions, however for this thesis only the final height will
+ be considered, and the flight path will therefore be simplified.
+ In the climb phase the plane is typically flown with a negative flap to
+ minimize drag, however this also yields that a lower 
+\begin_inset Formula $C_{Lmax}$
+\end_inset
+
+ so that the stall speed increases, see formula 
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\begin{equation}
+v_{min}=\sqrt{\frac{2\cdot m\cdot g}{C_{L}\cdot\rho\cdot S_{P}}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How the stall speed varies for different lift coefficient can be shown in
+ figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vmin"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Pics/Discussion/vmin.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+End speed for different lift coefficients.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vmin"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As seen the end velocity can typically be reduced with 
+\begin_inset Formula $2\unitfrac{m}{s}$
+\end_inset
+
+ by changing the flap setting at the end of the launch phase, so will this
+ extra pilot load have a large influence of the total height.
+ So the question is how many meters difference there will be in a small
+ change of the end velocity.
+ 
+\end_layout
+
+\begin_layout Subsection
+Line failure
+\end_layout
+
+\begin_layout Standard
+If the line force is becoming to great, the line will simply break.
+ Before this happens it will go into a plastic deformation and the formulas
+ for the line force are not valid anymore.
+ The breaking point is given by equation 
+\end_layout
+
+\begin_layout Subsection
+Over loading
+\end_layout
+
+\begin_layout Standard
+In worst case if the G-forces is becoming to large the wing will break.
+ Therefore it is important to keep the loading below the allowed maximums.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\end_layout
+
+\end_body
+\end_document

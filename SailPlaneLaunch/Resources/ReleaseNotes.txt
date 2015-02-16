@@ -1,0 +1,22 @@
+RELEASE NOTES v. 1.0.0.17, from 26.03.2014
+New features:
+-
+
+Bugs fixed:
+-Temperature display
+-names and units on Varying chart
+================================================
+
+RELEASE NOTES v. 1.0.0.16, from 26.03.2014
+New features:
+-Tab order altered (Credits to Zhuschell)
+-Pop-up description added (Credits to Zhuschell)
+-Installation path note (Credits to Carsten Meyer)
+-Now you can compare different simulations. In plot tab check 'Add to log' to save the simulation, then check 'Compare' and change saved simulation using combobox (when you have at least 2 simulations done).
+-In Sensitivity tab you can now analyze other output parameters than 'y'. 
+
+Bugs fixed:
+-Wrong conversion of Kelvin to Celsius (Carsten Meyer)
+-Wrong conversion of kg/m^2 to g/dm^2(Franseco)
+
+================================================

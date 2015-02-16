@@ -1,0 +1,150 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass scrbook
+\begin_preamble
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter beramono
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Part
+\start_of_appendix
+Code
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/Simulate.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={Simulate},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Simulate label},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/Euler.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={Euler},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Euler},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/Angles.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={Angles},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Angles},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/Forces.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={Forces},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Forces},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/LnD.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={LnD},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Lift and Drag},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/Solver.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={Solver},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Solver},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../SailPlaneLaunch/Winch.vb"
+lstparams "aboveskip=10pt,basicstyle={\\ttfamily\\normalsize},belowskip=10pt,breaklines=true,caption={Winch},captionpos=b,commentstyle={ \\color{ForestGreen} },frame=tb,keywordstyle={\\color{blue}},label={Winch},language={[Visual]Basic},lineskip=3pt,morekeywords={Or, Loop, Until, To, As, Single, Module, Console, Double, ByVal},numbers=left,numbersep=5pt,numberstyle={\\tiny},showspaces=false,showstringspaces=false,stepnumber=1,stringstyle={ \\color{Maroon}},tabsize=3"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
